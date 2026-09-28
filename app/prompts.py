@@ -7,7 +7,7 @@
 '''
 
 def marketing_prompt( prodect: str, audience: str ) -> str:
-  return '''# Role
+  return f'''# Role
 당신은 B2B SaaS 전문 마케터입니다.
 
 # Context
