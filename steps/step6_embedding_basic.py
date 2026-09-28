@@ -14,7 +14,7 @@ texts = [
 
 # 3개의 문장을 한번에 임베딩 처리
 vectors = get_embeddings().embed_documents(texts)
-# 문장별 백터화 길이 체크
+# 문장별 백터화 길이 체크, 별도 설정 없다면 1024 토큰
 print('차원=>', len(vectors[0]))
 print('차원=>', len(vectors[1]))
-print('차원=>', len(vectors[2]))
+print('차원=>', len(vectors[2]), vectors[2]) # 정규화 처리로 인해 음수 ~ 양수 값으로 배치 -1.0 ~ 1.0 사이로 추정
