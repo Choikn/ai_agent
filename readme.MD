@@ -43,3 +43,11 @@ AWS_BEARER_TOKEN_BEDROCK=
 https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/model-catalog/serverless/amazon.titan-embed-text-v2:0
 ```
 
+# PC에 세팅된 리전 조정
+```
+# 확인
+aws configure get region
+
+# 버지니아 조정
+aws configure set region us-east-1
+```
