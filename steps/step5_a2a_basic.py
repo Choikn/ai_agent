@@ -21,7 +21,7 @@ developer_agent = developer_prompt | get_chat_model() | StrOutputParser()
 reviewer_prompt = ChatPromptTemplate.from_messages([
   ("system", "당신은 까다로운 '전문 개발자'입니다. 신입 개발자가 작성한 코드를 리뷰하세요. \n"
              "보안 취약성, 비효율적인 부분, 스타일 가이드를 점검하고 수정 제안을 하세요. \n"
-             "코드가 완벽하다면 'pass'라고만 답변하세요. \n"
+             "코드가 완벽하다면 'PASS'라고만 답변하세요. \n"
    ),
   ("human", "다음 코드를 리뷰해 주세요. \n\n{code}"),
 ])
@@ -47,13 +47,26 @@ def run_agent_collaboration( topic: str ) -> None:
   # round 1. 신입 개발자 초안 개발
   print("\n[신입 개발자] 코드 작성 중...")
   draft_code = developer_agent.invoke({"request":topic})
-  print(f'---\n {draft_code[:100]} ... \n (코드 생략) \n ---')
+  print(f'---\n {draft_code[:200]} ... \n (코드 생략) \n ---')
 
   # round 2. 리뷰어가 비드백 제공 (평가)
   print("\n[전문 개발자] 코드 검토 중...")
+  feedback = reviewer_agent.invoke({"code":draft_code})
+  print(f'---\n {feedback} ... \n---')
   
   # round 3. 평가 결과에 따라 분기 -> pass가 나오면 개발 종료, 아니면 피드백 반영
-
+  if 'PASS' not in feedback: # 없다면
+    print('\n[신입 개발자] 피드백 반영하여 수정 중...')
+    final_code = refinder_agent.invoke({
+      "original_code":draft_code,
+      "feedback":feedback
+    })
+    # 순환 구조가 없기 때문에 단방향성 기준으로 여기서 마무리함 -> 랭그래프가 필요한 이유 (반복 가능, 에이전트수 줄일 수 있음)
+    print('최종 결과물')
+    print(final_code)
+  else:
+    print('최종 결과물')
+    print(draft_code)
 
 
 if __name__=='__main__':
