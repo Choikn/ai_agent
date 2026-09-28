@@ -7,6 +7,8 @@
 # 구조
 ```
 /
-L step3
+L app
+  L llm.py : LLM 모듈
+L steps
   L step4_langchain_basic.py  : 체인구성 (prompt | llm)
 ```
