@@ -27,3 +27,38 @@ L sql
   L migrations
     L 001_pgvector.sql
 ```
+
+# 테이블 구성 및 초기 작업
+```
+python -m scripts.migrate
+---
+applied: 001_pgvector.sql
+
+
+# 확인
+docker exec -it agent-postgres psql -U agent -d agentlab
+---
+psql (16.15 (Debian 16.15-1.pgdg12+2))
+Type "help" for help.
+
+# 현재 존재하는 모든 스키마(테이블) 확인
+psql (16.15 (Debian 16.15-1.pgdg12+2))
+Type "help" for help.
+
+agentlab=# \dt
+             List of relations
+ Schema |       Name        | Type  | Owner 
+--------+-------------------+-------+-------
+ public | demo_vectors      | table | agent
+ public | schema_migrations | table | agent
+(2 rows)
+
+# 구조 확인 -> q로 탈출
+agentlab=# \d demo_vectors
+
+# sql 수행
+agentlab=# select * from demo_vectors;
+ id | content | embedding 
+----+---------+-----------
+(0 rows)
+```
