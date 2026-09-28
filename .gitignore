@@ -2,3 +2,5 @@
 agent/
 # 환경설정파일
 .env
+# 캐싱파일
+__pycache__/
