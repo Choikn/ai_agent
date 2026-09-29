@@ -8,6 +8,10 @@
 ```
 /
 L docker-compose.yml
+L app
+    L database.py        : PostgreSQL  접속 커넥션 구성
+L steps
+    L step7_pgvector.py  : 간단한 텍스트(문장)을 테이블 upsert(insert or update) 처리
 ```
 
 # DB 구성
@@ -61,4 +65,43 @@ agentlab=# select * from demo_vectors;
  id | content | embedding 
 ----+---------+-----------
 (0 rows)
+```
+
+# 실행
+```
+# 1차 실행(쿼리1)
+python -m steps.step7_pgvector
+----
+환불 정책 [-0.06341178715229034, 0.05073736980557442, ..... ]
+```
+
+# 1차 실행(쿼리1, 쿼리2)
+python -m steps.step7_pgvector
+----
+# 질문 : 상품을 반품하고 싶어요 -> CS 관련 질문
+('환불 정책', 0.13145827540506594)   <- cs 관련 샘플에서 가장 높은 점수를 얻음
+('월 매출 분석', 0.11051657795906067)
+('연차 휴가 규정', 0.013668003375411297)
+
+
+# 쿼리를 통해 데이터 확인
+```
+select id, content from demo_vectors;
+ id |    content     
+----+----------------
+  1 | 환불 정책
+  2 | 연차 휴가 규정
+  3 | 월 매출 분석
+(3 rows)
+
+select 
+    id, content, 
+    left(embedding::text, 14) || '...' as embedding
+from demo_vectors;
+-----
+ id |    content     |     embedding     
+----+----------------+-------------------
+  1 | 환불 정책      | [-0.06341179,0...
+  2 | 연차 휴가 규정 | [-0.041086007,...
+  3 | 월 매출 분석   | [-0.06644361,-...
 ```
