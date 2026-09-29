@@ -10,3 +10,18 @@
             - 정책 부여 : 사내 규정, 업무 지식등에 질문은 rag를 사용하라라는등 
 
 - rag 기본 사용
+
+# 구조
+```
+/
+L app
+    L retrieval.py       : 백터 디비에 검색 (질문 전달, k개)후 결과 반환 함수 제공
+    L rag.py             : 질문 => 백터 디비 검색 => 결과+프럼프트 => LLM 추론요청 => 응답
+L steps
+    L step9_rag_basic.py : 검색 증강 테스트용
+```
+
+# 실행
+```
+python -m steps.step9_rag_basic
+```
