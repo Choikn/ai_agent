@@ -23,8 +23,8 @@ def _splite_sentences(block:str) -> list[str]:
 
 
 # 시멘틱 청킹 함수
-# 원문, 임계값(0.6 이하면 청킹), 최대글자수(유사도가 계속 0.6 이상이여도 최대 글자수가 1200 넘어가면 청킹)
-def semantic_splite_text(text:str, threshold:float=0.60, max_chars:int=1200) -> list[str]:
+# 원문, 임계값(0.6 이하면 청킹), 최소글자수, 최대글자수(유사도가 계속 0.6 이상이여도 최대 글자수가 1200 넘어가면 청킹)
+def semantic_splite_text(text:str, threshold:float=0.60, min_chars:int=300, max_chars:int=1200) -> list[str]:
     _splite_sentences(text)
 
     return []
