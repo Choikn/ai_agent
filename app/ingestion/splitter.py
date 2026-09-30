@@ -12,6 +12,8 @@
     - 말뭉치 -> 문장/문단 단위로 분절
 
 '''
+# 정규식
+import re
 
 # 긴 문장(말뭉치)을 문장 단위로 분리 
 def _splite_sentences(block:str) -> list[str]:
@@ -20,12 +22,41 @@ def _splite_sentences(block:str) -> list[str]:
     pass
 
 # 시멘틱에 맞게 데이터 담는 작업
+def _semantic_units(text:str) -> list[str]:
+    # 1. 문단의 끝 단위를 1차로 쪼개기 => r"\n\s*\n"
+    blocks = [
+        # 문단을 리스트의 멤버로 구성
+        block.strip()
+        # 말뭉치에서 문단의 구분값 기준 쪼개기 -> 반복
+        for block in re.split(r"\n\s*\n", text)
+        # 문단의 내용이 비어 있으면 배제
+        if block.strip()
+    ]
+    print(len(blocks), blocks)
+
+    # 2. 청킹 단위 데이터를 담는 그릇
+    units: list[str] = list()
+
+    # 3. 문단 단위로 순회 -> 1차적으로 청킹 진행 (최소글자수 단위 구성 -> 350 기준)
+    for block in blocks:
+        if len(block) <= 350:
+            units.append(block)
+        else:
+            # 350 글자수보다 많은 글자수를 가진 문단을 좀 더 쪼개기 위해서 _splite_sentences()에 전달
+            units.append(
+                _splite_sentences(block)
+            )
+
+    return units
 
 
 # 시멘틱 청킹 함수
 # 원문, 임계값(0.6 이하면 청킹), 최소글자수, 최대글자수(유사도가 계속 0.6 이상이여도 최대 글자수가 1200 넘어가면 청킹)
 def semantic_splite_text(text:str, threshold:float=0.60, min_chars:int=300, max_chars:int=1200) -> list[str]:
-    _splite_sentences(text)
+    # 1. semantic 유닛 단위 분할
+    units = _semantic_units(text)
+
+    # _splite_sentences(text)
 
     return []
 
