@@ -83,7 +83,7 @@ def advanced_search(
         # LEAST(fts_score, 1.0)*0.2 : 둘 중 더 작은 값을 선택 0.0 <= LEAST(fts_score, 1.0) <= 0.2
     '''
     sql = f"""
-        with_scored as (
+        with scored as (
             select
                 d.document_code,
                 d.title,

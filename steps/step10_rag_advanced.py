@@ -22,7 +22,7 @@ DEMO_TEXT = """
 """.strip()
 
 # 1. 고정 크기 청킹(문단 기준 청킹) (데모 텍스트가 작아서 chars수도 작게 임의 구성)
-paragraph_chunks = splite_text(DEMO_TEXT, max_chars=300)
+# paragraph_chunks = splite_text(DEMO_TEXT, max_chars=300)
 # for i, chunk in enumerate(paragraph_chunks, 1):
 #   print(f"[{i}] {chunk}")
 
@@ -41,6 +41,18 @@ paragraph_chunks = splite_text(DEMO_TEXT, max_chars=300)
 '''
 
 # 2. 시멘틱 청킹 (데모 텍스트가 작아서 chars수도 작게 임의 구성)
-semantic_chunks = semantic_splite_text(DEMO_TEXT, threshold=0.55, max_chars=400)
-for i, chunk in enumerate(paragraph_chunks, 1):
-  print(f"[{i}] {chunk}")
+# semantic_chunks = semantic_splite_text(DEMO_TEXT, threshold=0.55, max_chars=400)
+# for i, chunk in enumerate(paragraph_chunks, 1):
+#   print(f"[{i}] {chunk}")
+
+
+from app.retrieval import advanced_search
+# 3. 검색
+query = "상품 하자 환불 기간과 배송비 부담 주체"
+
+# 전체 검색
+for row in advanced_search(query, k=5):
+  print(row[0], row[1], row[2], row[3], row[-2], row[-1], row[4][:20])
+  print(row[4])
+
+# 필터를 활용한 검색 -> CS만 검색등
