@@ -113,3 +113,9 @@ def advanced_search(
         order by hybrid_score desc
         limit %s
     """
+    # [벡터화된 질문, 오리지널 질문 텍스트, 동적으로 구성되는 키워드들, 최대 1~20개 구성|k개]
+    total_params = [q, query, *params, max(1, min(k, 20))]
+
+    with connect() as conn, conn.cursor() as cur:
+        cur.execute(sql, total_params)
+        return cur.fetchall()
