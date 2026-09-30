@@ -49,7 +49,7 @@ def _splite_sentences(block:str) -> list[str]:
     '''
     for line in lines:
         # 후방검색 "(?<=[탐색문자들표시])", 바로 앞문자가 문장 종결 기호인지 체크
-        sentences = re.split(r"(?<=[.!?。 ！ ？])\s+")
+        sentences = re.split(r"(?<=[.!?。 ！ ？])\s+", line)
         # units에 담기 -> 문장 끝 기호로 분절된 문장을 리스트에 담기
         units.extend(
             sentence.strip()
@@ -173,7 +173,7 @@ def semantic_splite_text(text:str, threshold:float=0.60, max_chars:int=1200) -> 
     if current:
         chunks.append(current)
 
-    return []
+    return chunks
 
 
 def splite_text(text:str, max_chars:int = 700):
