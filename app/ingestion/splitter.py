@@ -15,6 +15,9 @@
 # 정규식
 import re
 from app.embedding import get_embeddings
+import math
+# vector 타입 힌트
+from typing import Sequence
 
 # 350글자수(설정값) 이상을 가진 문단을 재료로 쪼개기 진행 
 def _splite_sentences(block:str) -> list[str]:
@@ -87,6 +90,34 @@ def _semantic_units(text:str) -> list[str]:
 
     return units
 
+# 코사인 유사도 검사 함수
+def _cosine_similarity(
+    vector_a: Sequence[float],
+    vector_b: Sequence[float],
+) -> float:
+    dot_product = sum(
+        a * b
+        for a, b in zip(vector_a, vector_b)
+    )
+
+    norm_a = math.sqrt(
+        sum(
+            value * value
+            for value in vector_a
+        )
+    )
+
+    norm_b = math.sqrt(
+        sum(
+            value * value
+            for value in vector_b
+        )
+    )
+    # 0인 경우 처리
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+    # 공식 = 두벡터의 내적 / (a벡터크기)*(b벡터크기)
+    return dot_product / (norm_a * norm_b)
 
 # 시멘틱 청킹 함수
 # 원문, 임계값(0.6 이하면 청킹), 최소글자수, 최대글자수(유사도가 계속 0.6 이상이여도 최대 글자수가 1200 넘어가면 청킹)
@@ -112,6 +143,9 @@ def semantic_splite_text(text:str, threshold:float=0.60, min_chars:int=300, max_
         pre_vec = embeddings[index-1]
         # 현재벡터 : 1 -> 2 -> 3
         cur_vec = embeddings[index]
+
+        # 6-2. 유사도 검사
+        similarity = _cosine_similarity(pre_vec, cur_vec)
 
     return []
 
