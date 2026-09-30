@@ -11,10 +11,19 @@ def sales_summary(start_date: str, end_date: str) -> str:
     특정 날짜 범위(YYYY-MM-DD) 내에서 결제 완료 매출과 주문 건수를 조회한다 => 집계
   '''
   with connect() as conn, conn.cursor() as cur:
+    # 결제 완료된 건만 대상으로 시작일, 종료일까지 대상
     sql = """
-
+        select
+            COALESCE(sum(amount), 0),
+            count(*)
+        from orders
+        where
+            status='paid'
+            and order_date >= %s::date
+            and order_date < (%s::date + INTERVAL '1 day')
+        ;
     """
-    params = ()
+    params = (start_date, end_date)
     cur.execute(sql, params)
     revenue, count = cur.fetchone()
   return f"revenue={revenue}, orders={count}, range={start_date}~{end_date}"
