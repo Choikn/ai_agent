@@ -16,3 +16,8 @@ L steps
 L sql
   L 003_business.sql  : sql 툴을 위한 대상 테이블과 더미 데이터
 ```
+
+# 테이블 생성 및 데이터 삽입
+```
+python -m scripts.migrate
+```
