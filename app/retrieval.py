@@ -59,3 +59,34 @@ def advanced_search(
     if category:
         filters.append("d.category=%s")
         params.append(category.lower())   # 원문 소문자
+
+    # 5. 조건 쿼리 구성
+    where = ("where " + " AND ".join(filters)) if filters else ""
+
+    # 6. sql 구성
+    '''
+        # CTE(Common Table Expression) 구조, 서브쿼리를 사용했다 비교 유사
+        with scored as (
+            select ...
+        )
+        select ...
+        from scored
+    '''
+    sql = f"""
+        select
+            d.document_code,
+            d.title,
+            d.department,
+            d.category,
+            c.content,
+            1-(c.embedding <=> %s) as vector_score,
+            ts_rank(
+                
+            ) as score
+
+        from document_chunks c
+        join documents d
+        on c.document_id=d.id
+        order by (c.embedding <=> %s)
+        limit %s
+    """
