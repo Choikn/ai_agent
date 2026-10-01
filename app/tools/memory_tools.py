@@ -18,6 +18,12 @@ def remember_user_preference(content: str, importance: float=0.7) -> str:
     사용자가 명시한 지속적인 신호, 업무 방식을 장기 기억으로 저장한다.
   '''
   #...
+  # 파라미터 구성
+
+  # 쿼리 실행
+  with connect() as conn, conn.cursor() as cur:
+      # insert 구문
+      pass
 
   return "preference memory saved" # 도구를 사용한 LLM에게 전달(랭그래프 설계상 툴 => Agent)
 
@@ -28,6 +34,16 @@ def recall_user_memory(query: str, k: int=3) -> str:
     현재 질문과 관련된 사용자의 과거 장기 기억을 검색한다.
   '''
   #...
+  # 파라미터 구성
+    
+  # 쿼리 실행
+  with connect() as conn, conn.cursor() as cur:
+      # select 구문
+
+      # fetchall()
+
+      # 엑세스 시간 update 구문
+      pass
 
   # 검색 결과를 문자열로 구성하여 타입, 유사도 점수, 중요도, 내용을 k개 반복 구성하여 반환
   # 도구를 사용한 LLM에게 전달(랭그래프 설계상 툴 => Agent)
