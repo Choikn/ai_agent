@@ -17,12 +17,24 @@ def remember_user_preference(content: str, importance: float=0.7) -> str:
   '''
     사용자가 명시한 지속적인 신호, 업무 방식을 장기 기억으로 저장한다.
   '''
-  #...
   # 파라미터 구성
+  # content -> 임베딩후 백터화 처리
+  vec = Vector( get_embeddings().embed_query(content) )
+  # 중요도 보정
+  importance = max(0.0, min(float(importance), 1.0))
 
   # 쿼리 실행
   with connect() as conn, conn.cursor() as cur:
       # insert 구문
+      sql = """
+          insert into agent_memories
+          (used_id, memory_type, content, embedding, importance)
+          value
+          (%s, 'preference', %s, %s, %s)
+      """
+      params = (USER_ID, content, vec, importance)
+      cur.execute(sql, params)
+      conn.commit()
       pass
 
   return "preference memory saved" # 도구를 사용한 LLM에게 전달(랭그래프 설계상 툴 => Agent)
