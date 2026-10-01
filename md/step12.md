@@ -33,3 +33,27 @@ L steps
 ```
 python -m steps.step12_langgraph_agent
 ```
+
+# 판단 흐름
+```
+result["messages"]
+
+[0] HumanMessage
+    └─ 사용자 질문
+
+[1] AIMessage
+    └─ Tool Calls
+    ├─ sales_summary
+    └─ top_products
+
+[2] ToolMessage
+    └─ sales_summary 결과
+
+[3] ToolMessage
+    └─ top_products 결과
+
+[4] AIMessage
+    └─ 최종 답변
+
+rounds = 2 (LLM 두번 추론)
+```
