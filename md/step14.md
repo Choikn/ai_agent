@@ -162,3 +162,22 @@ TOOL RESULT : ## 📊 환불 현황 (2026-09-01 ~ 2026-09-05)
 > 💡 참고: 현재 조회된 매출/환불 도구에는 검수 완료 여부, 증빙자료 첨부 여부, 배송비 처리 내역에 대한 데이터가 없어 **CS팀 케이스 로그 확인이 추가로 필요**합니다.
 ++++++++++++++++++++++++++++++
 ```
+
+# 오류 조치
+```
+# 005 실행 로그 삭제 -> psql에서 진행
+delete from schema_migrations where name='005_memory.sql';
+
+# agent_memories 삭제
+drop table agent_memories;
+
+# sql 실행 -> 터이널 에서 진행
+python -m scripts.migrate
+
+# demo() 주석 모두 해제
+step14_memory.py
+
+# 프로그램 실행
+python -m steps.step14_memory
+
+```
