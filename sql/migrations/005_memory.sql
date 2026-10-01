@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS agent_memories (
     -- 저장할 내용
     content TEXT NOT NULL,
     -- 저장한 내용에 대한 벡터화 값
-    embedding VARCHAR(1024) NOT NULL,
+    embedding VECTOR(1024) NOT NULL,
     -- 중요도
     importance DOUBLE PRECISION NOT NULL DEFAULT 0.5,
     -- 최초 저장일

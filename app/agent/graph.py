@@ -9,8 +9,8 @@ from langchain_core.messages import SystemMessage  # Agent 구성시 프럼프�
 from langgraph.graph import StateGraph, START, END # 랭그래프의 구성 요소
 from langgraph.prebuilt import ToolNode, tools_condition # Tool 실행, 호출여부 판단
 from app.llm import get_chat_model # LLM 모델
-from app.agents.state import AgentState # 랭그래프상에서 상태관리용
-from app.agents.prompts import SYSTEM_PROMPT
+from app.agent.state import AgentState # 랭그래프상에서 상태관리용
+from app.agent.prompts import SYSTEM_PROMPT
 from app.tools.sql_tools import sales_summary, top_products, refund_summary  # SQL Tool
 from app.tools.rag_tools import search_company_policy # rag tool
 
