@@ -29,7 +29,7 @@ def remember_user_preference(content: str, importance: float=0.7) -> str:
       sql = """
           insert into agent_memories
           (user_id, memory_type, content, embedding, importance)
-          value
+          values
           (%s, 'preference', %s, %s, %s)
       """
       params = (USER_ID, content, vec, importance)

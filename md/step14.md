@@ -42,4 +42,29 @@ python -m scripts.migrate
 # 실행
 ```
 python -m steps.step14_memory
+---
+[최종답변]
+
+ **조회 결과**
+
+현재 저장된 사용자 선호 방식은 다음과 같습니다:
+
+- **답변 형식**: 짧은 bullet(글머리 기호) 형태 선호
+- **중요도**: 0.8 (높음)
+
+앞으로 답변 시 이 형식을 기본으로 적용하겠습니다. 혹시 추가로 선호하는 방식(예: 숫자 데이터 우선 제시, 결론 먼저 등)이 있다면 말씀해주시면 함께 기억해두겠습니다.
+++++++++++++++++++++++++++++++
+
+--- 
+select count(*) from agent_memories;
+ count 
+-------
+     1
+(1 row)
+
+agentlab=# select id, left(content, 20) from agent_memories;
+ id |              left              
+----+--------------------------------
+  2 | 답변은 짧은 bullet(글머리 기호
+(1 row)
 ```
