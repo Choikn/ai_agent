@@ -33,6 +33,9 @@ L steps
 ```
 python -m steps.step12_langgraph_agent
 ---
+
+- query = "상품 하자로 반품할 경우 환불 기간과 배송비 부담 주체를 알려주세요"
+---
 HumanMessage -> AIMessage Tool use 판단 -> ToolMessage -> AIMessage END로 판단 -> 종료
 [
     HumanMessage(content='상품 하자로 반품할 경우 환불 기간과 배송비 부담 주체를 알려주세요', additional_kwargs={}, response_metadata={}, id='bc667801-cb91-4a8d-a0d2-8b044f486419'), 
@@ -86,4 +89,20 @@ result["messages"]
     └─ 최종 답변
 
 rounds = 2 (LLM 두번 추론)
+```
+
+
+# 요구사항 분석 2
+- query = "2026-09-01부터 2026-09-05까지 매출과 상위 3개 상품을 알려줘"
+```
+[
+    HumanMessage(content='2026-09-01부터 2026-09-05까지 매출과 상위 3개 상품을 알려줘', additional_kwargs={}, response_metadata={}, id='05567742-c942-4539-ba83-7065fd168782'), \
+    
+    AIMessage(content=[{'type': 'tool_use', 'name': 'sales_summary', 'input': {'start_date': '2026-09-01', 'end_date': '2026-09-05'}, 'id': 'tooluse_TR5AJWW2njwIehlFfHTd6i'}, {'type': 'tool_use', 'name': 'top_products', 'input': {'start_date': '2026-09-01', 'end_date': '2026-09-05', 'limit': 3}, 'id': 'tooluse_6if8uz6zioJuHulQv9zbl2'}], additional_kwargs={}, response_metadata={'ResponseMetadata': {'RequestId': '46999fcd-5c81-4985-90f0-64257d9c059a', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Thu, 01 Oct 2026 01:27:43 GMT', 'content-type': 'application/json', 'content-length': '635', 'connection': 'keep-alive', 'x-amzn-requestid': '46999fcd-5c81-4985-90f0-64257d9c059a'}, 'RetryAttempts': 0}, 'stopReason': 'tool_use', 'metrics': {'latencyMs': [2721]}, 'model_provider': 'bedrock_converse', 'model_name': 'us.anthropic.claude-sonnet-5'}, id='lc_run--01a0f513-6be9-7001-a57d-4d5796b1b0d3-0', tool_calls=[{'name': 'sales_summary', 'args': {'start_date': '2026-09-01', 'end_date': '2026-09-05'}, 'id': 'tooluse_TR5AJWW2njwIehlFfHTd6i', 'type': 'tool_call'}, {'name': 'top_products', 'args': {'start_date': '2026-09-01', 'end_date': '2026-09-05', 'limit': 3}, 'id': 'tooluse_6if8uz6zioJuHulQv9zbl2', 'type': 'tool_call'}], invalid_tool_calls=[], usage_metadata={'input_tokens': 1080, 'output_tokens': 185, 'total_tokens': 1265, 'input_token_details': {'cache_creation': 0, 'cache_read': 0}}), 
+    
+    ToolMessage(content='revenue=3586000.00, orders=8, range=2026-09-01~2026-09-05', name='sales_summary', id='c1f53554-0c8f-4ea9-8aec-9536e66ba015', tool_call_id='tooluse_TR5AJWW2njwIehlFfHTd6i'), 
+    
+    ToolMessage(content='1. 사내 AI Agent 구축: qty=1, revenue=1200000.00\n2. RAG 구축 컨설팅: qty=1, revenue=800000.00\n3. 데이터 분석 패키지: qty=4, revenue=600000.00', name='top_products', id='c162c63e-fea9-4742-aa27-0e8faa49bc5a', tool_call_id='tooluse_6if8uz6zioJuHulQv9zbl2'), 
+    
+    AIMessage(content='## 2026-09-01 ~ 2026-09-05 매출 요약\n\n**전체 매출 집계** (결제 완료 기준)\n- 총 매출: **3,586,000원**\n- 총 주문 건수: **8건**\n\n**상위 3개 상품** (매출 기준)\n\n| 순위 | 제품명 | 판매 수량 | 매출액 |\n|---|---|---|---|\n| 1 | 사내 AI Agent 구축 | 1 | 1,200,000원 |\n| 2 | RAG 구축 컨설팅 | 1 | 800,000원 |\n| 3 | 데이터 분석 패키지 | 4 | 600,000원 |\n\n추가로 특정 상품의 상세 트렌드나 다른 기간과의 비교가 필요하시면 말씀해 주세요.', additional_kwargs={}, response_metadata={'ResponseMetadata': {'RequestId': '63f76402-4aa0-4636-b0a0-37941a70a309', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Thu, 01 Oct 2026 01:27:48 GMT', 'content-type': 'application/json', 'content-length': '855', 'connection': 'keep-alive', 'x-amzn-requestid': '63f76402-4aa0-4636-b0a0-37941a70a309'}, 'RetryAttempts': 0}, 'stopReason': 'end_turn', 'metrics': {'latencyMs': [4273]}, 'model_provider': 'bedrock_converse', 'model_name': 'us.anthropic.claude-sonnet-5'}, id='lc_run--01a0f513-7957-7cf2-ba5e-1ad5581972b8-0', tool_calls=[], invalid_tool_calls=[], usage_metadata={'input_tokens': 1439, 'output_tokens': 276, 'total_tokens': 1715, 'input_token_details': {'cache_creation': 0, 'cache_read': 0}})]
 ```
