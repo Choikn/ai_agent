@@ -65,5 +65,19 @@ def top_products(start_date: str, end_date: str, limit:int=3) -> str:
 @tool
 def refund_summary(start_date: str, end_date: str) -> str:
   with connect() as conn, conn.cursor() as cur:
+    sql = """
+        select
+            COALESCE(sum(amount), 0),
+            count(*),
+            string_agg(DISTINCT reason, ',')
+        from refunds
+        where
+            requested_at >= %s::date
+            and requested_at < (%s::date + INTERVAL '1 day')
+        ;
+    """
+    params = (start_date, end_date)
+    cur.execute(sql, params)
+    amount, count, reasons = cur.fetchone()
     pass
-  return f"refund_count={count}, refund_amount={amount}, range={start_date}~{end_date}, reason={reason}"
+  return f"refund_count={count}, refund_amount={amount}, range={start_date}~{end_date}, reason={reasons}"
