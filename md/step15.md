@@ -34,3 +34,15 @@
   - 개발자가 만드는 AI 서비스에서 MCP를 사용한다면, MCP Client가 개발/설치되어서 사용되어야함
     - LLM/Agent가 도구로서 MCP Client을 사용 -> MCP Server로 요청이 가고 -> 외부 서비스와 엑세스 요청/응답 -> 응답 -> LLM/Agent까지 도달함
     - 개발자가 만드는 AI 서비스 => MCP host 라고 부름
+
+# 구조
+```
+/
+L mcp_servers
+  L exchange_server.py  : 편의상 MCP Server 역할, MCP host에 위치
+L app
+  L tools
+    L mcp_tools.py      : MCP Client 역할, 랭그래프상 도구로 등록
+L steps
+  L step15_mcp.py       : MCP 테스트용, MCP host 포지션
+```
