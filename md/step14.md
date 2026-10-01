@@ -38,3 +38,8 @@ python -m scripts.migrate
 # 테이블 구조 확인
 \d agent_memories
 ```
+
+# 실행
+```
+python -m steps.step14_memory
+```
