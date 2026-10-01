@@ -2,7 +2,7 @@
 랭그래프기반 에이전트 실행하는 코드
 '''
 import asyncio
-from app.agent.graph import build_graph
+from app.agents.graph import build_graph
 
 async def run(query: str):
     '''
