@@ -112,6 +112,9 @@ def build_graph():
         # 노이즈 제거
         content.removeprefix("'''json").removesuffix("'''").strip()
         # JSON문자열 => AgentResponse 객체로 세팅
+        final_ar = AgentResponse.model_validate_json( content )
+
+        return {"final":final_ar}
     
     # 3-1. 그래프 생성
     graph = StateGraph( AgentState )            # 상태 정보를 가진 그래프 생성
