@@ -16,6 +16,9 @@ from app.tools.rag_tools import search_company_policy # rag tool
 from app.tools.memory_tools import recall_user_memory, remember_user_preference # 메모리 툴
 from app.tools.mcp_tools import get_exchange_rate # MCP 도구
 
+# 최종 응답의 출력 형식 정의한 pydantic 모델
+from app.output import AgentResponse
+
 # 2. 툴 목록 구성
 TOOLS = [sales_summary, top_products, refund_summary, search_company_policy, recall_user_memory, remember_user_preference]
 
@@ -40,6 +43,13 @@ def build_graph():
         )
         # 4. 추론결과, 라운드(LLM 1회 호출) + 1 하여 반환 -> state['messages']에 기록됨 => 상태관리
         return {"messages":[response], "rounds": rounds+1}
+
+    # Agent 최종 답변을 JSON으로 구조화 하는 노드
+    async def format_output(state:AgentState):
+        # claude 기준 모델 버전이 5로 진입한 이후 => 답변 구조화 랭체인 api 사용 x => LLM으로 처리하도록 변경
+
+        # 구조화 대한 LLM 호출
+        response = await model.ainvoke()
     
     # 3-1. 그래프 생성
     graph = StateGraph( AgentState )            # 상태 정보를 가진 그래프 생성
@@ -48,6 +58,8 @@ def build_graph():
     graph.add_node("agent", call_model)         # LLM Agent 노드 등록
     # handle_tool_errors : 툴 실행중에 에러 발생시 에이전트 전체를 바로 싪패시키지 않고 오류를 처리하여 agent 대응하게 할것인가?
     graph.add_node("tools", ToolNode(TOOLS, handle_tool_errors=True) )
+    # 출력 포멧 처리
+    graph.add_node("format", format_output)
 
     # 3-3. 흐름 구성(실행방향 지정)
     # 시작점
