@@ -110,7 +110,7 @@ def build_graph():
             ```
         '''
         # 노이즈 제거
-        content.removeprefix("```json").removesuffix("```").strip()
+        content = content.removeprefix("```json").removesuffix("```").strip()
         # JSON문자열 => AgentResponse 객체로 세팅
         final_ar = AgentResponse.model_validate_json( content )
 
