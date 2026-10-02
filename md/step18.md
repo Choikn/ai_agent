@@ -13,3 +13,17 @@
           LANGSMITH_API_KEY=...
           LANGSMITH_PROJECT="ai-agent"
         ```
+
+# 구조
+```
+/
+L app
+  L observability.py          : 랭스미스 상태 반환
+L steps
+  L step18_observability.py
+```
+
+# 실행
+```
+python -m steps.step18_observability
+```
