@@ -63,7 +63,7 @@ def build_graph():
 
         # 구조화 대한 LLM 호출
         response = await model.ainvoke(
-            HumanMessage(content=f"""
+            [HumanMessage(content=f"""
                 다음 답변을 JSON으로 구조화하세요.
                 반드시 JSON만 출력하세요.
 
@@ -89,7 +89,7 @@ def build_graph():
                 - confidence는 0.0~1.0 사이 숫자로 작성합니다.
                 - 근거가 약하면 confidence를 낮추세요.
             """)
-        )
+        ])
 
         # 응답 처리
         content = response.content.strip()
@@ -110,10 +110,11 @@ def build_graph():
             ```
         '''
         # 노이즈 제거
-        content.removeprefix("'''json").removesuffix("'''").strip()
+        content.removeprefix("```json").removesuffix("```").strip()
         # JSON문자열 => AgentResponse 객체로 세팅
         final_ar = AgentResponse.model_validate_json( content )
 
+        # 상태객체에 final 키에 값을 부여한 것
         return {"final":final_ar}
     
     # 3-1. 그래프 생성
