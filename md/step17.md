@@ -17,3 +17,8 @@ L app
 L steps
   L step17_evaluation.py  : 테스트 메인코드
 ```
+
+# 실행
+```
+python -m steps.step17_evaluation
+```
