@@ -11,7 +11,7 @@
 L steps
   L step16_structured_output.py : 테스트용
 L app
-  L output.py : 출력 형식에 관련된 form 구성, pydantic 활용
+  L output.py  : 출력 형식에 관련된 form 구성, pydantic 활용
   L agent
-    L graph   : output.py에서 만든 모델을 출력에 적용
+    L graph.py : output.py에서 만든 모델을 출력에 적용
 ```
