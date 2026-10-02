@@ -31,5 +31,5 @@ async def run(query: str):
 
     # 출력 포맷을 설정한 이후 => final
     final = result.get('final')
-    print("[최종답변]\n\n", final.model_dump_json(indent=2) if final else result["message"][-1].content)
+    print("[최종답변]\n\n", final.model_dump_json(indent=2) if final else result["messages"][-1].content)
     print("+"*30)
