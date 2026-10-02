@@ -14,6 +14,7 @@ from app.agent.prompts import SYSTEM_PROMPT
 from app.tools.sql_tools import sales_summary, top_products, refund_summary  # SQL Tool
 from app.tools.rag_tools import search_company_policy # rag tool
 from app.tools.memory_tools import recall_user_memory, remember_user_preference # 메모리 툴
+from app.tools.mcp_tools import get_exchange_rate # MCP 도구
 
 # 2. 툴 목록 구성
 TOOLS = [sales_summary, top_products, refund_summary, search_company_policy, recall_user_memory, remember_user_preference]

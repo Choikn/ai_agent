@@ -46,7 +46,14 @@ L mcp_servers
   L exchange_server.py  : 편의상 MCP Server 역할, MCP host에 위치
 L app
   L tools
-    L mcp_tools.py      : MCP Client 역할, 랭그래프상 도구로 등록
+    L mcp_tools.py      : MCP Client 역할, 랭그래프상 도구로 등록 -> agent에서 사용
+  L agent
+    L graph.py          : 도구 등록
 L steps
   L step15_mcp.py       : MCP 테스트용, MCP host 포지션
+```
+
+# 실행
+```
+python -m steps.step15_mcp
 ```
