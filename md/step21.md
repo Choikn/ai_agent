@@ -15,7 +15,7 @@ L app
     L [v]main.py    : Agent를 fastapi에서 가급적 공용으로 실행하도록 함수 추가(보정)
     L [v]service.py : fastapi로 백엔드 구성, /chat, /health
 L steps
-    L step21_agent_service.py : 로컬에서 fastapi 구동
+    L [v]step21_agent_service.py : 로컬에서 fastapi 구동
 --- 도커
 L [v] requirements.txt            : fastapi, uvicorn 추가
 L Dockerfile                  : 에이전트 구동하는 컨테이너 이미지
@@ -38,3 +38,7 @@ python -m steps.step21_agent_service
     - /chat  : `try it out` -> 프럼프트 구성하여 질문후 execute 버튼 클릭
     - /heath : `try it out` -> execute 버튼 클릭
 ```
+
+# Agent 컨테이너화
+- Dockerfile 구성
+  - Fastapi + 랭그래프등
