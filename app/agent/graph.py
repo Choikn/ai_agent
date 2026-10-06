@@ -41,7 +41,7 @@ def build_graph():
     # Agent 노드 -> 추론만 할것인가? 도구를 사용하여 결과를 가지고 추론을 할것인가?
     async def call_model(state:AgentState):
         # 하네스 반영
-        started_at = state.get('started_at') or time.monotonic()
+        started_at = state.get('start_at') or time.monotonic()
         budget = Budget(
             tool_rounds = state.get('tool_rounds', 0),
             start_at    = started_at
