@@ -46,3 +46,7 @@ python -m steps.step21_agent_service
 # 도커 컴포즈 구성
 - 서비스
   - Agent 컨테이너 추가
+- 컨테이너 구성
+```
+  docker compose up --build
+```
