@@ -42,3 +42,7 @@ python -m steps.step21_agent_service
 # Agent 컨테이너화
 - Dockerfile 구성
   - Fastapi + 랭그래프등
+
+# 도커 컴포즈 구성
+- 서비스
+  - Agent 컨테이너 추가
